@@ -11,6 +11,12 @@
         <li><a href="/api/values">/api/values</a></li>
         <li><a href="/api/values/123">/api/values/123</a></li>
     </ol>
+
+    <input name="somedate1" id="somedate1" type="datetime" />
+    <button onclick="alert(document.querySelector('#somedate1').value)">OK</button>
+    <button onclick="alert(new Date(document.querySelector('#somedate1').value).toISOString())">Date</button>
+    <br />
+    <input name="somedate2" id="somedate2" type="datetime-local" /><button onclick="alert(document.querySelector('#somedate2').value)">OK</button><br />
 </body>
     
 </html>
