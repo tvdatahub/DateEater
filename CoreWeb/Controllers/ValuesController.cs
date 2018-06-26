@@ -13,32 +13,35 @@ namespace CoreWeb.Controllers
         [HttpGet]
         public object Get()
         {
-            return new { time = DateTime.Now, values = new string[] { "value1", "value2" } };
+            return new { now = DateTime.Now, zone = TimeZoneInfo.Local };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public object Get(int id)
         {
-            return new { time = DateTime.Now, value = "value" + id };
+            return new { now = DateTime.Now, zone = TimeZoneInfo.Local.Id, value = "value" + id };
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]DateTime value)
+        public object Post([FromBody]DateTime value)
         {
+            return new { now = DateTime.Now, zone = TimeZoneInfo.Local.Id, yourTime = value };
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]DateTimeOffset value)
+        public object Put(int id, [FromBody]DateTimeOffset value)
         {
+            return new { now = DateTime.Now, zone = TimeZoneInfo.Local.Id, value = "value" + id, yourTime = value };
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public object Delete(int id)
         {
+            return new { now = DateTime.Now, zone = TimeZoneInfo.Local.Id, value = "value" + id };
         }
     }
 }

@@ -3,6 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script>
+        q = function(s) { return document.querySelector(s); };
+        qa = function(s) { return document.querySelectorAll(s); };
+        function submit(method, data, resulter) {
+            json = JSON.stringify(data);
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, '/api/values/123', true);
+            xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+            xhr.onload = function () {
+	            if (xhr.readyState == 4 && xhr.status == "200") {
+    	            var result = JSON.parse(xhr.responseText);
+                    resulter(result);
+	            }
+            }
+            xhr.send(json);
+        }
+        function post(data,resulter) {submit('POST',data,resulter);}
+        function put(data,resulter) {submit('PUT',data,resulter);}
+    </script>
 </head>
 <body>
     <h1>DateEater</h1>
@@ -12,11 +31,21 @@
         <li><a href="/api/values/123">/api/values/123</a></li>
     </ol>
 
-    <input name="somedate1" id="somedate1" type="datetime" />
-    <button onclick="alert(document.querySelector('#somedate1').value)">OK</button>
-    <button onclick="alert(new Date(document.querySelector('#somedate1').value).toISOString())">Date</button>
-    <br />
-    <input name="somedate2" id="somedate2" type="datetime-local" /><button onclick="alert(document.querySelector('#somedate2').value)">OK</button><br />
+    <form action="/">
+        <input name="somedate1" id="somedate1" size="50" type="datetime" />
+        <button onclick="alert(q('#somedate1').value)">OK</button>
+        <button onclick="q('#somedate1').value=new Date(); return false;">Set now</button>
+        <button onclick="put(q('#somedate1').value, function(result){q('#somedate4').value=result.yourTime}); return false;">Send</button>
+        <input name="somedate4" id="somedate4" size="50" />
+        <br />
+        <input name="somedate2" id="somedate2" size="50" type="datetime-local" />
+        <button onclick="alert(q('#somedate2').value); return false;">OK</button>
+        <button onclick="q('#somedate2').value=new Date().toISOString(); return false;">Set now</button>
+        <button onclick="put(q('#somedate2').value, function(result){q('#somedate3').value=result.yourTime}); return false;">Send</button>
+        <input name="somedate3" id="somedate3" size="50" />
+        <br />
+        <input type="submit" id="submit" name="submit" value="submit" />
+    </form>
+
 </body>
-    
 </html>
