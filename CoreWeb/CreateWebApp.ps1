@@ -3,7 +3,7 @@ $repoUrl = "https://github.com/tvdatahub/DateEater"
 
 if ([string]::IsNullOrEmpty($(Get-AzureRmContext).Account)) {Login-AzureRmAccount}
 
-$zones = "W.Europe Standard Time,US Eastern Standard Time,India Standard Time"
+$zones = "W. Europe Standard Time,US Eastern Standard Time,India Standard Time"
 $i=0
 
 "Creating $appName Wapps from $repoUrl for time zones $zones..."
@@ -14,7 +14,7 @@ if (1) {
         $i++
 
         "Creating Wapp $appName$i..."
-        $newApp = New-AzureRmWebApp -Name "$appName$i" # -AppServicePlan "LessCheap"
+        $newApp = New-AzureRmWebApp -Name "$appName$i"  -AppServicePlan "LessCheap"
 
         "Deploy from github..."
         $PropertiesObject = @{ repoUrl = $repoUrl; branch = "master"; isManualIntegration = "false"; }

@@ -36,9 +36,9 @@ namespace CoreWeb
             }
             app.UseMvc();
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-            app.UseDirectoryBrowser();
+//            app.UseDefaultFiles();
+//            app.UseStaticFiles();
+//            app.UseDirectoryBrowser();
         }
     }
 }

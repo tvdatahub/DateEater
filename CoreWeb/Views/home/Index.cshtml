@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>DateEater</title>
+    <style>body{font-family:'Trebuchet MS';}</style>
+    <script>
+        dq = '"';
+        q = function(s) { return document.querySelector(s); };
+        qa = function(s) { return document.querySelectorAll(s); };
+        function submit(method, data, resulter) {
+            json = JSON.stringify(data);
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, '/api/values' + (/put/i.test(method) ? '/123' :''), true);
+            xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+            xhr.onload = function () {
+	            if (xhr.readyState == 4 && xhr.status == "200") {
+    	            var result = JSON.parse(xhr.responseText);
+                    resulter(result);
+	            }
+            }
+            xhr.send(json);
+        }
+        function post(data,resulter) {submit('POST',data,resulter);}
+        function put(data, resulter) { submit('PUT', data, resulter); }
+    </script>
+</head>
+<body>
+    <h1>DateEater</h1>
+    @*Tests formatting and parsing DateTime and -offsets. <br />*@
+    Server zone: @TimeZoneInfo.Local.Id, @TimeZoneInfo.Local.GetUtcOffset(DateTime.Now) <br />
+    Client zone: <span id="clientZone"></span>
+    @*<table>
+            <tr><td>Server DateTime.Now</td><td>@DateTime.Now</td></tr>
+            <tr><td>Server DateTimeOffset.Now</td><td>@DateTimeOffset.Now</td></tr>
+        </table>
+        <ol>
+            <li><a href="/api/values">/api/values</a></li>
+            <li><a href="/api/values/123">/api/values/123</a></li>
+        </ol>*@
+
+    <form action="/">
+        <table>
+            <tr>
+                <td>
+                    <input name="plainTime0" id="plainTime0" size="30" value="@DateTime.Now" />
+                </td>
+                <td></td>
+                <td>
+                    <button onclick="put(q('#plainTime0').value, result => q('#parsedTime0').value=result.yourTime ); return false;">Put</button>
+                </td>
+                <td>
+                    <button onclick="post(q('#plainTime0').value, result => q('#parsedTime0').value=result.yourTime ); return false;">Post</button>
+                </td>
+                <td>
+                    <input name="parsedTime0" id="parsedTime0" size="30" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input name="plainTime01" id="plainTime01" size="30" value="@DateTimeOffset.Now" />
+                </td>
+                <td></td>
+                <td>
+                    <button onclick="put(q('#plainTime01').value, result => q('#parsedTime01').value=result.yourTime ); return false;">Put</button>
+                </td>
+                <td>
+                    <button onclick="post(q('#plainTime01').value, result => q('#parsedTime01').value=result.yourTime ); return false;">Post</button>
+                </td>
+                <td>
+                    <input name="parsedTime01" id="parsedTime01" size="30" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input name="plainTime1" id="plainTime1" size="30" />
+                </td>
+                <td>
+                    <button onclick="q('#plainTime1').value=new Date(); return false;">Set now</button>
+                </td>
+                <td>
+                    <button onclick="put(q('#plainTime1').value, result => q('#parsedTime1').value=result.yourTime ); return false;">Put</button>
+                </td>
+                <td>
+                    <button onclick="post(q('#plainTime1').value, result => q('#parsedTime1').value=result.yourTime ); return false;">Post</button>
+                </td>
+                <td>
+                    <input name="parsedTime1" id="parsedTime1" size="30" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input name="plainTime2" id="plainTime2" size="30" />
+                </td>
+                <td>
+                    <button onclick="q('#plainTime2').value=new Date().toISOString(); return false;">Set now ISO</button>
+                </td>
+                <td>
+                    <button onclick="put(q('#plainTime2').value, result => q('#parsedTime2').value=result.yourTime ); return false;">Put</button>
+                </td>
+                <td>
+                    <button onclick="post(q('#plainTime2').value, result => q('#parsedTime2').value=result.yourTime ); return false;">Post</button>
+                </td>
+                <td>
+                    <input name="parsedTime2" id="parsedTime2" size="30" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>q('#clientZone').innerHTML = new Date().toString().match(/\(([A-Za-z\s].*)\)/)[1] + ', ' + new Date().toString().match(/([-\+][0-9]+)\s/)[1]</script>
+</body>
+</html>
