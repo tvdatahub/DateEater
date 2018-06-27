@@ -45,7 +45,9 @@
                 <td>
                     <input name="plainTime0" id="plainTime0" size="30" value="@DateTime.Now" />
                 </td>
-                <td></td>
+                <td>
+                    <button onclick="q('#parsedTime0').value = new Date(q('#plainTime0').value); return false;">Parse</button>
+                </td>
                 <td>
                     <button onclick="put(q('#plainTime0').value, result => q('#parsedTime0').value=result.yourTime ); return false;">Put</button>
                 </td>
@@ -60,7 +62,9 @@
                 <td>
                     <input name="plainTime01" id="plainTime01" size="30" value="@DateTimeOffset.Now" />
                 </td>
-                <td></td>
+                <td>
+                    <button onclick="q('#parsedTime01').value = new Date(q('#plainTime01').value); return false;">Parse</button>
+                </td>
                 <td>
                     <button onclick="put(q('#plainTime01').value, result => q('#parsedTime01').value=result.yourTime ); return false;">Put</button>
                 </td>
@@ -76,7 +80,7 @@
                     <input name="plainTime1" id="plainTime1" size="30" />
                 </td>
                 <td>
-                    <button onclick="q('#plainTime1').value=new Date(); return false;">Set now</button>
+                    <button onclick="q('#plainTime1').value=new Date().toLocaleString(); return false;">Set now</button>
                 </td>
                 <td>
                     <button onclick="put(q('#plainTime1').value, result => q('#parsedTime1').value=result.yourTime ); return false;">Put</button>
