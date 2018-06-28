@@ -1,4 +1,5 @@
 ﻿$appName = "DateEater"
+$appServicePlan = "LessCheap" #
 $repoUrl = "https://github.com/tvdatahub/DateEater"
 
 if ([string]::IsNullOrEmpty($(Get-AzureRmContext).Account)) {Login-AzureRmAccount}
@@ -8,13 +9,13 @@ $i=0
 
 "Creating $appName Wapps from $repoUrl for time zones $zones..."
 
-if (1) {
+if (1) {  # Make 0 to delete Wapps with name starting with $appName
     $zones.Split(",") | % {
         $zone = "$_"
         $i++
 
         "Creating Wapp $appName$i..."
-        $newApp = New-AzureRmWebApp -Name "$appName$i"  -AppServicePlan "LessCheap"
+        $newApp = New-AzureRmWebApp -Name "$appName$i"  -AppServicePlan $appServicePlan
 
         "Deploy from github..."
         $PropertiesObject = @{ repoUrl = $repoUrl; branch = "master"; isManualIntegration = "false"; }
