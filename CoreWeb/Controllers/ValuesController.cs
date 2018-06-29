@@ -25,14 +25,14 @@ namespace CoreWeb.Controllers
 
         // POST api/values
         [HttpPost]
-        public object Post([FromBody]DateTime value)
+        public object Post([FromBody]DateTime? value)
         {
             return new { now = DateTime.Now, zone = TimeZoneInfo.Local.Id, yourTime = value };
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public object Put(int id, [FromBody]DateTimeOffset value)
+        public object Put(int id, [FromBody]DateTimeOffset? value)
         {
             return new { now = DateTime.Now, zone = TimeZoneInfo.Local.Id, value = "value" + id, yourTime = value };
         }

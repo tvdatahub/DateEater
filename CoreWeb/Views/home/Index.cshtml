@@ -7,7 +7,8 @@
     <script>
         Date.prototype.toISOOffset = function (offMinutes) {
             d = new Date(this);
-            min = offMinutes || -d.getTimezoneOffset();
+            min = -d.getTimezoneOffset();
+            if (typeof offMinutes != 'undefined') min = offMinutes;
             d.setTime(d.getTime() + min*60000); // d is now distorted and will be abused for formatting
             off = (min > 0 ? '+' : '-') + ('0' + Math.floor(Math.abs(min) / 60)).slice(-2) + ':' + ('0' + Math.abs(min) % 60).slice(-2);
             return d.toISOString().replace('Z', off);
@@ -29,11 +30,12 @@
             xhr.send(json);
         }
         function post(data,resulter) {submit('POST',data,resulter);}
-        function put(data, resulter) { submit('PUT', data, resulter); }
+        function put(data, resulter) {submit('PUT', data, resulter); }
         function getNow() {
             try {
-                now = q('#now').value;
-                if (now) now = new Date(now);
+                var now = new Date(nowS);
+                var nowS = q('#now').value;
+                if (nowS) now = new Date(nowS);
                 if (now.toString() == 'Invalid Date') return new Date();
                 return now;
             } catch {
