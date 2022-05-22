@@ -9,7 +9,7 @@ $i=0
 
 "Creating $appName Wapps from $repoUrl for time zones $zones..."
 
-if (1) {  # Make 0 to delete Wapps with name starting with $appName
+if (1) {  # Change 1 to 0 to delete Wapps with name starting with $appName
     $zones.Split(",") | % {
         $zone = "$_"
         $i++
